@@ -1,0 +1,27 @@
+You should set the env in your deployment's pod template spec, like this:
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: monitoring-influxdb
+  namespace: kube-system
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        task: monitoring
+        k8s-app: influxdb
+    spec:
+      containers:
+      - name: influxdb
+        image: k8s.gcr.io/heapster-influxdb-amd64:v1.3.3
+        env:
+        - name: INFLUXDB_BIND_ADDRESS
+          value: 127.0.0.1:8088
+        volumeMounts:
+        - mountPath: /data
+          name: influxdb-storage
+      volumes:
+      - name: influxdb-storage
+        emptyDir: {}
