@@ -16,5 +16,7 @@ spec:
     protocol: TCP
   externalIPs:
   - K8SHA_IPVIRTUAL
+  - K8SHA_IP1
+  - K8SHA_IP2
   selector:
     app: ingress-nginx
